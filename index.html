@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cabinet Vision Expert & C# Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;500&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0e0c09;
+      --surface:   #161310;
+      --border:    #2a2318;
+      --amber:     #c8873a;
+      --amber-lt:  #e8a95c;
+      --teal:      #3ac8b0;
+      --text:      #e8e0d4;
+      --muted:     #7a6f62;
+      --serif:     'DM Serif Display', Georgia, serif;
+      --mono:      'JetBrains Mono', monospace;
+      --sans:      'Outfit', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── grain overlay ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ─── layout ─── */
+    .page { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ─── header ─── */
+    header {
+      padding: 5rem 0 4rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: end;
+      border-bottom: 1px solid var(--border);
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .header-text h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .header-text h1 em {
+      font-style: italic;
+      color: var(--amber);
+    }
+
+    .header-text .tagline {
+      margin-top: 1rem;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--teal);
+      text-transform: uppercase;
+    }
+
+    /* ─── portrait ─── */
+    .portrait-wrap {
+      flex-shrink: 0;
+      animation: fadeUp 0.9s 0.15s ease both;
+    }
+
+    .portrait-frame {
+      width: 160px;
+      height: 200px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .portrait-frame::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(145deg, rgba(200,135,58,0.08), transparent 60%);
+      z-index: 1;
+    }
+
+    .portrait-frame::after {
+      content: '';
+      position: absolute;
+      top: 8px; left: 8px; right: -8px; bottom: -8px;
+      border: 1px solid var(--amber);
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    .portrait-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
+    .portrait-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-align: center;
+      padding: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .portrait-placeholder svg {
+      width: 48px; height: 48px;
+      opacity: 0.35;
+      stroke: var(--amber);
+      stroke-width: 1;
+      fill: none;
+    }
+
+    /* ─── sections ─── */
+    section {
+      padding: 3.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      max-width: 80px;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+
+    p {
+      color: #c8bfb4;
+      font-size: 1rem;
+      max-width: 680px;
+      margin-bottom: 1rem;
+    }
+
+    /* ─── skills grid ─── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      padding: 1.8rem;
+      transition: background 0.25s;
+    }
+
+    .skill-card:hover { background: #1d1814; }
+
+    .skill-card .icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .skill-card h3 {
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--amber-lt);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.01em;
+    }
+
+    .skill-card p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    /* ─── code pill ─── */
+    .code-block {
+      display: inline-block;
+      background: #0a1a18;
+      border: 1px solid rgba(58,200,176,0.2);
+      color: var(--teal);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 2px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── tag list ─── */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .tag:hover { border-color: var(--amber); color: var(--amber-lt); }
+
+    /* ─── contact ─── */
+    .contact-line {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .contact-line a {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--teal);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(58,200,176,0.3);
+      padding-bottom: 1px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .contact-line a:hover { border-color: var(--teal); }
+
+    /* ─── footer ─── */
+    footer {
+      padding: 2rem 0;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      opacity: 0.5;
+    }
+
+    /* ─── animations ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    section {
+      animation: fadeUp 0.8s ease both;
+    }
+
+    section:nth-of-type(1) { animation-delay: 0.2s; }
+    section:nth-of-type(2) { animation-delay: 0.35s; }
+    section:nth-of-type(3) { animation-delay: 0.5s; }
+    section:nth-of-type(4) { animation-delay: 0.65s; }
+
+    /* ─── responsive ─── */
+    @media (max-width: 600px) {
+      header {
+        grid-template-columns: 1fr;
+      }
+      .portrait-wrap {
+        order: -1;
+      }
+      .portrait-frame {
+        width: 120px;
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-text">
+      <p class="tagline">Cabinet Vision &nbsp;·&nbsp; C# Development &nbsp;·&nbsp; Workflow Automation</p>
+      <h1>Crafting <em>precision</em><br>inside the cabinet.</h1>
+    </div>
+    <div class="portrait-wrap">
+      <div class="portrait-frame">
+        <!--
+          Replace the placeholder below with an <img> tag:
+          <img src="portrait.jpg" alt="Your Name" />
+        -->
+        <div class="portrait-placeholder">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          <span>Add portrait.jpg<br>to your repo</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section>
+    <div class="section-label">About</div>
+    <h2>Where cabinet design meets custom code.</h2>
+    <p>
+      I specialise in getting the most out of Cabinet Vision — particularly in the areas
+      where most users hit a wall: complex <strong style="color:var(--amber-lt); font-weight:400;">Report Writer</strong> outputs
+      and custom <strong style="color:var(--amber-lt); font-weight:400;">User Catalogues & Symbols (UCS)</strong>.
+      If it can be built inside CV, I've probably already pushed it further than the docs intended.
+    </p>
+    <p>
+      On the software side, I develop <span class="code-block">C#</span> applications that integrate directly
+      with Cabinet Vision, automating workflows, surfacing data, and bridging the gap between the
+      design room and the factory floor.
+    </p>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section>
+    <div class="section-label">Expertise</div>
+    <h2>Deep knowledge, practical outcomes.</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="icon">📐</div>
+        <h3>Report Writer Mastery</h3>
+        <p>
+          Building production-ready cut lists, purchase orders, shop drawings, and
+          custom-format reports that go well beyond the standard templates.
+        </p>
+      </div>
+      <div class="skill-card">
+        <div class="icon">🗂️</div>
+        <h3>UCS Development</h3>
+        <p>
+          Designing and maintaining User Catalogues & Symbols — tailored construction
+          logic, parametric items, and company-specific libraries that match how you
+          actually build.
+        </p>
+      </div>
+      <div class="skill-card">
+        <div class="icon">⚙️</div>
+        <h3>C# Integration</h3>
+        <p>
+          Custom applications built on the Cabinet Vision SDK and API surface —
+          automating data pipelines, syncing with ERPs, and delivering tools that
+          live inside your existing workflow.
+        </p>
+      </div>
+      <div class="skill-card">
+        <div class="icon">🔗</div>
+        <h3>Workflow Automation</h3>
+        <p>
+          Reducing repetitive work between design, estimating, and production by
+          connecting Cabinet Vision outputs to the rest of your business software stack.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH -->
+  <section>
+    <div class="section-label">Technologies</div>
+    <h2>The toolkit.</h2>
+    <p>
+      My work sits at the intersection of the Cabinet Vision ecosystem and the
+      broader <span class="code-block">.NET</span> / <span class="code-block">C#</span> world.
+      I work with the CV internals daily and bring software engineering discipline
+      to an industry that often runs on manual processes.
+    </p>
+    <div class="tags">
+      <span class="tag">Cabinet Vision</span>
+      <span class="tag">Report Writer</span>
+      <span class="tag">UCS / Symbols</span>
+      <span class="tag">C# / .NET</span>
+      <span class="tag">CV SDK</span>
+      <span class="tag">SQL</span>
+      <span class="tag">WPF / WinForms</span>
+      <span class="tag">CNC Integration</span>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section>
+    <div class="section-label">Contact</div>
+    <h2>Let's work together.</h2>
+    <p>
+      Have a Cabinet Vision problem that's been sitting in the "too hard" pile?
+      Need a custom report, a better symbol library, or a tool to tie CV into your
+      production pipeline? Get in touch.
+    </p>
+    <div class="contact-line">
+      <!-- Replace # with your actual links -->
+      <a href="mailto:you@example.com">you@example.com</a>
+      <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+    </div>
+  </section>
+
+</div>
+<footer>
+  &copy; <span id="yr"></span> &nbsp;·&nbsp; Built for GitHub Pages
+</footer>
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
