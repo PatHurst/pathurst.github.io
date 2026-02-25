@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cabinet Vision Expert & C# Developer</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;500&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet" />
+  <title>InnovaTech | Cabinet Vision & C# Development</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,200;0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0e0c09;
-      --surface:   #161310;
-      --border:    #2a2318;
-      --amber:     #c8873a;
-      --amber-lt:  #e8a95c;
-      --teal:      #3ac8b0;
-      --text:      #e8e0d4;
-      --muted:     #7a6f62;
-      --serif:     'DM Serif Display', Georgia, serif;
-      --mono:      'JetBrains Mono', monospace;
-      --sans:      'Outfit', sans-serif;
+      --bg:         #090b10;
+      --surface:    #0d1117;
+      --surface2:   #161b22;
+      --border:     #21262d;
+      --green:      #39d353;
+      --green-dim:  #1a6630;
+      --cyan:       #58a6ff;
+      --orange:     #f0883e;
+      --text:       #c9d1d9;
+      --muted:      #484f58;
+      --white:      #f0f6fc;
+      --mono:       'JetBrains Mono', 'Fira Code', monospace;
+      --sans:       'Space Grotesk', sans-serif;
     }
 
     html { scroll-behavior: smooth; }
@@ -27,426 +29,507 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--sans);
-      font-weight: 300;
+      font-family: var(--mono);
+      font-weight: 200;
       line-height: 1.7;
       overflow-x: hidden;
     }
 
-    /* ─── grain overlay ─── */
+    /* scanline effect */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* grid background */
     body::before {
       content: '';
       position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-image:
+        linear-gradient(rgba(57,211,83,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57,211,83,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
       pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
+      z-index: 0;
     }
 
-    /* ─── layout ─── */
-    .page { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
 
-    /* ─── header ─── */
+    /* terminal bar */
+    .terminal-bar {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-top: none;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      border-radius: 0 0 4px 4px;
+      margin-bottom: 3rem;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .terminal-bar .dots { display: flex; gap: 6px; margin-right: 0.5rem; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+
+    .terminal-bar .path { color: var(--cyan); }
+    .terminal-bar .branch { color: var(--green); }
+    .cursor {
+      display: inline-block;
+      width: 8px; height: 13px;
+      background: var(--green);
+      animation: blink 1.1s step-end infinite;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* header */
     header {
-      padding: 5rem 0 4rem;
+      padding: 1rem 0 3rem;
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 3rem;
-      align-items: end;
-      border-bottom: 1px solid var(--border);
-      animation: fadeUp 0.9s ease both;
+      align-items: start;
+      animation: fadeUp 0.8s 0.1s ease both;
     }
 
-    .header-text h1 {
-      font-family: var(--serif);
-      font-size: clamp(2.8rem, 6vw, 4.8rem);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      color: var(--text);
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
-    .header-text h1 em {
-      font-style: italic;
-      color: var(--amber);
+    .logo-wrap img {
+      height: 40px;
+      width: auto;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
     }
 
-    .header-text .tagline {
-      margin-top: 1rem;
+    .logo-name {
       font-family: var(--mono);
-      font-size: 0.78rem;
-      font-weight: 300;
-      letter-spacing: 0.12em;
-      color: var(--teal);
-      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
     }
 
-    /* ─── portrait ─── */
-    .portrait-wrap {
-      flex-shrink: 0;
-      animation: fadeUp 0.9s 0.15s ease both;
+    .logo-name span { color: var(--green); }
+
+    h1 {
+      font-family: var(--mono);
+      font-size: clamp(1.7rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--white);
+      letter-spacing: -0.02em;
     }
+
+    h1 .comment {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--green-dim);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    h1 .highlight { color: var(--green); }
+    h1 .highlight-o { color: var(--orange); }
+
+    .subtitle {
+      margin-top: 0.9rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .subtitle .sep { color: var(--border); margin: 0 0.5rem; }
+
+    /* portrait */
+    .portrait-wrap { position: relative; flex-shrink: 0; }
 
     .portrait-frame {
-      width: 160px;
-      height: 200px;
-      border: 1px solid var(--border);
+      width: 148px;
       position: relative;
-      overflow: hidden;
-      background: var(--surface);
     }
 
     .portrait-frame::before {
       content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(145deg, rgba(200,135,58,0.08), transparent 60%);
-      z-index: 1;
-    }
-
-    .portrait-frame::after {
-      content: '';
       position: absolute;
-      top: 8px; left: 8px; right: -8px; bottom: -8px;
-      border: 1px solid var(--amber);
-      opacity: 0.3;
+      top: -6px; left: -6px; right: 6px; bottom: 6px;
+      border: 1px solid var(--green-dim);
       z-index: 0;
     }
 
     .portrait-frame img {
-      width: 100%; height: 100%;
+      width: 148px;
+      height: 185px;
       object-fit: cover;
+      object-position: center top;
       display: block;
       position: relative;
       z-index: 1;
+      border: 1px solid var(--border);
+      filter: grayscale(20%) contrast(1.05);
     }
 
-    .portrait-placeholder {
-      width: 100%; height: 100%;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 0.5rem;
-      color: var(--muted);
-      font-family: var(--mono);
-      font-size: 0.65rem;
+    .portrait-tag {
+      font-size: 0.62rem;
+      color: var(--green);
       letter-spacing: 0.1em;
+      margin-top: 0.6rem;
       text-align: center;
-      padding: 1rem;
-      position: relative;
-      z-index: 1;
     }
 
-    .portrait-placeholder svg {
-      width: 48px; height: 48px;
-      opacity: 0.35;
-      stroke: var(--amber);
-      stroke-width: 1;
-      fill: none;
-    }
-
-    /* ─── sections ─── */
+    /* sections */
     section {
-      padding: 3.5rem 0;
-      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.7s ease both;
     }
 
-    section:last-of-type { border-bottom: none; }
+    section:nth-of-type(1) { animation-delay: 0.25s; }
+    section:nth-of-type(2) { animation-delay: 0.35s; }
+    section:nth-of-type(3) { animation-delay: 0.45s; }
+    section:nth-of-type(4) { animation-delay: 0.55s; }
 
-    .section-label {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+    .section-header {
+      margin-bottom: 1.4rem;
     }
 
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-      max-width: 80px;
-    }
+    .fn { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.06em; }
+    .fn-kw   { color: #ff7b72; }
+    .fn-name { color: var(--cyan); }
+    .fn-paren { color: var(--muted); }
+    .fn-ret  { color: var(--orange); }
 
     h2 {
-      font-family: var(--serif);
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 400;
-      line-height: 1.2;
-      margin-bottom: 1.2rem;
+      font-family: var(--sans);
+      font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.8rem;
     }
 
     p {
-      color: #c8bfb4;
-      font-size: 1rem;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text);
       max-width: 680px;
-      margin-bottom: 1rem;
-    }
-
-    /* ─── skills grid ─── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      margin-top: 2rem;
-    }
-
-    .skill-card {
-      background: var(--surface);
-      padding: 1.8rem;
-      transition: background 0.25s;
-    }
-
-    .skill-card:hover { background: #1d1814; }
-
-    .skill-card .icon {
-      font-size: 1.4rem;
       margin-bottom: 0.9rem;
     }
 
-    .skill-card h3 {
-      font-family: var(--sans);
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--amber-lt);
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.01em;
-    }
+    p:last-child { margin-bottom: 0; }
 
-    .skill-card p {
-      font-size: 0.875rem;
-      color: var(--muted);
-      margin-bottom: 0;
-    }
-
-    /* ─── code pill ─── */
-    .code-block {
-      display: inline-block;
-      background: #0a1a18;
-      border: 1px solid rgba(58,200,176,0.2);
-      color: var(--teal);
+    .inline-code {
+      background: rgba(88,166,255,0.1);
+      border: 1px solid rgba(88,166,255,0.2);
+      color: var(--cyan);
       font-family: var(--mono);
-      font-size: 0.78rem;
-      padding: 0.15rem 0.55rem;
-      border-radius: 2px;
-      letter-spacing: 0.03em;
+      font-size: 0.8em;
+      padding: 0.1em 0.45em;
+      border-radius: 3px;
     }
 
-    /* ─── tag list ─── */
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1.2rem;
+    /* cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 1.5rem;
     }
+
+    .card {
+      background: var(--surface);
+      padding: 1.5rem;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 2px; height: 100%;
+      background: var(--green-dim);
+      transition: background 0.2s;
+    }
+
+    .card:hover { background: var(--surface2); }
+    .card:hover::before { background: var(--green); }
+
+    .card-num { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.6rem; }
+
+    .card h3 {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .card p { font-size: 0.82rem; color: var(--muted); margin-bottom: 0; font-family: var(--sans); }
+
+    /* tags */
+    .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1.2rem; }
 
     .tag {
       font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      padding: 0.3rem 0.75rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      padding: 0.25rem 0.7rem;
       border: 1px solid var(--border);
       color: var(--muted);
-      text-transform: uppercase;
-      transition: border-color 0.2s, color 0.2s;
+      border-radius: 2px;
+      transition: all 0.18s;
     }
 
-    .tag:hover { border-color: var(--amber); color: var(--amber-lt); }
+    .tag:hover { border-color: var(--green); color: var(--green); }
+    .tag.hi { border-color: var(--green-dim); color: var(--green); }
 
-    /* ─── contact ─── */
-    .contact-line {
+    /* contact */
+    .contact-links {
       display: flex;
-      align-items: center;
       gap: 1.5rem;
       flex-wrap: wrap;
-      margin-top: 1rem;
+      margin-top: 1.2rem;
     }
 
-    .contact-line a {
+    .contact-links a {
       font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--teal);
+      font-size: 0.78rem;
+      color: var(--cyan);
       text-decoration: none;
-      letter-spacing: 0.05em;
-      border-bottom: 1px solid rgba(58,200,176,0.3);
-      padding-bottom: 1px;
-      transition: border-color 0.2s, color 0.2s;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
     }
 
-    .contact-line a:hover { border-color: var(--teal); }
+    .contact-links a:hover { color: var(--white); }
+    .contact-links a::before { content: '→'; color: var(--green); font-size: 0.7rem; }
 
-    /* ─── footer ─── */
+    /* footer */
     footer {
-      padding: 2rem 0;
-      text-align: center;
-      font-family: var(--mono);
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 0 2.5rem;
       font-size: 0.68rem;
-      letter-spacing: 0.1em;
       color: var(--muted);
-      opacity: 0.5;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
-    /* ─── animations ─── */
+    /* animations */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    section {
-      animation: fadeUp 0.8s ease both;
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    section:nth-of-type(1) { animation-delay: 0.2s; }
-    section:nth-of-type(2) { animation-delay: 0.35s; }
-    section:nth-of-type(3) { animation-delay: 0.5s; }
-    section:nth-of-type(4) { animation-delay: 0.65s; }
-
-    /* ─── responsive ─── */
-    @media (max-width: 600px) {
-      header {
-        grid-template-columns: 1fr;
-      }
-      .portrait-wrap {
-        order: -1;
-      }
-      .portrait-frame {
-        width: 120px;
-        height: 150px;
-      }
+    /* responsive */
+    @media (max-width: 580px) {
+      header { grid-template-columns: 1fr; }
+      .portrait-wrap { order: -1; }
+      .portrait-frame img { width: 110px; height: 138px; }
+      .portrait-frame { width: 110px; }
     }
   </style>
 </head>
 <body>
+
+<div class="terminal-bar">
+  <div class="dots">
+    <div class="dot dot-r"></div>
+    <div class="dot dot-y"></div>
+    <div class="dot dot-g"></div>
+  </div>
+  <span class="path">~/innovatech</span>
+  <span style="color:var(--muted)"> on </span>
+  <span class="branch"> main</span>
+  <span style="color:var(--muted); margin-left:0.5rem;">$ ./portfolio --serve</span>
+  <div class="cursor"></div>
+</div>
+
 <div class="page">
 
   <header>
     <div class="header-text">
-      <p class="tagline">Cabinet Vision &nbsp;·&nbsp; C# Development &nbsp;·&nbsp; Workflow Automation</p>
-      <h1>Crafting <em>precision</em><br>inside the cabinet.</h1>
+      <div class="logo-wrap">
+        <img src="Logo.png" alt="InnovaTech logo" />
+        <span class="logo-name">Innova<span>Tech</span></span>
+      </div>
+      <h1>
+        <span class="comment">// Cabinet Vision · C# Development</span>
+        Building smarter<br>
+        <span class="highlight">cabinet</span> <span class="highlight-o">software.</span>
+      </h1>
+      <p class="subtitle">
+        CV Expert<span class="sep">|</span>Report Writer<span class="sep">|</span>UCS Development<span class="sep">|</span>C# Integration
+      </p>
     </div>
     <div class="portrait-wrap">
       <div class="portrait-frame">
-        <!--
-          Replace the placeholder below with an <img> tag:
-          <img src="portrait.jpg" alt="Your Name" />
-        -->
-        <div class="portrait-placeholder">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="8" r="4"/>
-            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-          </svg>
-          <span>Add portrait.jpg<br>to your repo</span>
-        </div>
+        <img src="8S7A3309.jpg" alt="InnovaTech developer" />
       </div>
+      <div class="portrait-tag">// developer.jpg</div>
     </div>
   </header>
 
-  <!-- ABOUT -->
   <section>
-    <div class="section-label">About</div>
-    <h2>Where cabinet design meets custom code.</h2>
+    <div class="section-header">
+      <span class="fn">
+        <span class="fn-kw">public </span>
+        <span class="fn-ret">string </span>
+        <span class="fn-name">About</span>
+        <span class="fn-paren">() { }</span>
+      </span>
+    </div>
+    <h2>Where cabinet design meets clean code.</h2>
     <p>
-      I specialise in getting the most out of Cabinet Vision — particularly in the areas
-      where most users hit a wall: complex <strong style="color:var(--amber-lt); font-weight:400;">Report Writer</strong> outputs
-      and custom <strong style="color:var(--amber-lt); font-weight:400;">User Catalogues & Symbols (UCS)</strong>.
-      If it can be built inside CV, I've probably already pushed it further than the docs intended.
+      InnovaTech sits at the intersection of two worlds: deep Cabinet Vision expertise and
+      professional software development. I build things that make Cabinet Vision do more —
+      whether that's a report that perfectly matches your production workflow, a UCS library
+      built around how you actually manufacture, or a custom <span class="inline-code">C#</span>
+      application that ties CV into the rest of your business.
     </p>
-    <p>
-      On the software side, I develop <span class="code-block">C#</span> applications that integrate directly
-      with Cabinet Vision, automating workflows, surfacing data, and bridging the gap between the
-      design room and the factory floor.
-    </p>
+    <p>Most CV users accept the tool's limits. I write code around them.</p>
   </section>
 
-  <!-- EXPERTISE -->
   <section>
-    <div class="section-label">Expertise</div>
-    <h2>Deep knowledge, practical outcomes.</h2>
-    <div class="skills-grid">
-      <div class="skill-card">
-        <div class="icon">📐</div>
-        <h3>Report Writer Mastery</h3>
-        <p>
-          Building production-ready cut lists, purchase orders, shop drawings, and
-          custom-format reports that go well beyond the standard templates.
-        </p>
+    <div class="section-header">
+      <span class="fn">
+        <span class="fn-kw">public </span>
+        <span class="fn-ret">List&lt;Skill&gt; </span>
+        <span class="fn-name">GetExpertise</span>
+        <span class="fn-paren">() { }</span>
+      </span>
+    </div>
+    <h2>Core capabilities.</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-num">01</div>
+        <h3>Report Writer</h3>
+        <p>Production-ready cut lists, shop drawings, purchase orders, and fully custom report formats that go well beyond the defaults.</p>
       </div>
-      <div class="skill-card">
-        <div class="icon">🗂️</div>
+      <div class="card">
+        <div class="card-num">02</div>
         <h3>UCS Development</h3>
-        <p>
-          Designing and maintaining User Catalogues & Symbols — tailored construction
-          logic, parametric items, and company-specific libraries that match how you
-          actually build.
-        </p>
+        <p>Parametric symbols, custom construction logic, and company-specific catalogues that reflect how you actually build, not just a generic template.</p>
       </div>
-      <div class="skill-card">
-        <div class="icon">⚙️</div>
-        <h3>C# Integration</h3>
-        <p>
-          Custom applications built on the Cabinet Vision SDK and API surface —
-          automating data pipelines, syncing with ERPs, and delivering tools that
-          live inside your existing workflow.
-        </p>
+      <div class="card">
+        <div class="card-num">03</div>
+        <h3>C# Applications</h3>
+        <p>Custom tools built on the CV SDK — from standalone utilities to full integrations with ERP, quoting, and production management systems.</p>
       </div>
-      <div class="skill-card">
-        <div class="icon">🔗</div>
+      <div class="card">
+        <div class="card-num">04</div>
         <h3>Workflow Automation</h3>
-        <p>
-          Reducing repetitive work between design, estimating, and production by
-          connecting Cabinet Vision outputs to the rest of your business software stack.
-        </p>
+        <p>Eliminating the manual steps between design, estimating, and the factory floor by wiring Cabinet Vision into your broader software stack.</p>
       </div>
     </div>
   </section>
 
-  <!-- TECH -->
   <section>
-    <div class="section-label">Technologies</div>
-    <h2>The toolkit.</h2>
+    <div class="section-header">
+      <span class="fn">
+        <span class="fn-kw">const </span>
+        <span class="fn-ret">string[] </span>
+        <span class="fn-name">techStack</span>
+        <span class="fn-paren"> = [ ... ]</span>
+      </span>
+    </div>
+    <h2>The stack.</h2>
     <p>
-      My work sits at the intersection of the Cabinet Vision ecosystem and the
-      broader <span class="code-block">.NET</span> / <span class="code-block">C#</span> world.
-      I work with the CV internals daily and bring software engineering discipline
-      to an industry that often runs on manual processes.
+      Everything I build is centred on the Cabinet Vision ecosystem. On the development side
+      I work in <span class="inline-code">C#</span> / <span class="inline-code">.NET</span>,
+      using the CV SDK to interact with jobs, items, and materials programmatically — then surfacing
+      results through WPF interfaces, REST endpoints, or direct file outputs depending on what the
+      workflow needs.
     </p>
     <div class="tags">
-      <span class="tag">Cabinet Vision</span>
-      <span class="tag">Report Writer</span>
-      <span class="tag">UCS / Symbols</span>
-      <span class="tag">C# / .NET</span>
+      <span class="tag hi">Cabinet Vision</span>
+      <span class="tag hi">Report Writer</span>
+      <span class="tag hi">UCS / Symbols</span>
+      <span class="tag hi">C# / .NET</span>
       <span class="tag">CV SDK</span>
-      <span class="tag">SQL</span>
-      <span class="tag">WPF / WinForms</span>
+      <span class="tag">WPF</span>
+      <span class="tag">WinForms</span>
+      <span class="tag">SQL Server</span>
+      <span class="tag">REST APIs</span>
       <span class="tag">CNC Integration</span>
+      <span class="tag">Git</span>
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section>
-    <div class="section-label">Contact</div>
-    <h2>Let's work together.</h2>
+    <div class="section-header">
+      <span class="fn">
+        <span class="fn-kw">await </span>
+        <span class="fn-name">Contact</span>
+        <span class="fn-paren">.Send(</span>
+        <span class="fn-ret">message</span>
+        <span class="fn-paren">)</span>
+      </span>
+    </div>
+    <h2>Get in touch.</h2>
     <p>
-      Have a Cabinet Vision problem that's been sitting in the "too hard" pile?
-      Need a custom report, a better symbol library, or a tool to tie CV into your
-      production pipeline? Get in touch.
+      Got a Cabinet Vision problem sitting in the "too hard" pile? Need a custom report, a better
+      symbol library, or a C# tool that connects CV to the rest of your workflow? Reach out — I
+      like the hard ones.
     </p>
-    <div class="contact-line">
-      <!-- Replace # with your actual links -->
-      <a href="mailto:patrick@in-nova-tech.com">patrick@in-nova-tech.com</a>
-      <a href="https://github.com/pathurst" target="_blank">GitHub</a>
+    <div class="contact-links">
+      <a href="mailto:you@innovatech.com">you@innovatech.com</a>
+      <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
     </div>
   </section>
 
 </div>
-<footer>
-  &copy; <span id="yr"></span> &nbsp;·&nbsp; Built for GitHub Pages
+
+<footer class="page">
+  <span style="color:var(--green-dim)">// InnovaTech &copy; <span id="yr"></span></span>
+  <span>Cabinet Vision &amp; C# Development</span>
 </footer>
+
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>
