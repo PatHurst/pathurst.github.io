@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>InnovaTech</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,200;0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,200;0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;600&display=swap"
+    rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:         #090b10;
-      --surface:    #0d1117;
-      --surface2:   #161b22;
-      --border:     #21262d;
-      --green:      #39d353;
-      --green-dim:  #1a6630;
-      --cyan:       #58a6ff;
-      --orange:     #f0883e;
-      --text:       #c9d1d9;
-      --muted:      #484f58;
-      --white:      #f0f6fc;
-      --mono:       'JetBrains Mono', 'Fira Code', monospace;
-      --sans:       'Space Grotesk', sans-serif;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    html { scroll-behavior: smooth; }
+    :root {
+      --bg: #29292a;
+      --surface: #29292a;
+      --surface2: #29292a;
+      --border: #000000;
+      --green: #39d353;
+      --green-dim: #1a6630;
+      --cyan: #58a6ff;
+      --orange: #f0883e;
+      --text: #c9d1d9;
+      --muted: #484f58;
+      --white: #f0f6fc;
+      --mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --sans: 'Space Grotesk', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       background: var(--bg);
@@ -38,14 +49,13 @@
     /* scanline effect */
     body::after {
       content: '';
-      position: fixed; inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.03) 2px,
-        rgba(0,0,0,0.03) 4px
-      );
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.03) 2px,
+          rgba(0, 0, 0, 0.03) 4px);
       pointer-events: none;
       z-index: 9999;
     }
@@ -53,10 +63,11 @@
     /* grid background */
     body::before {
       content: '';
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background-image:
-        linear-gradient(rgba(57,211,83,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(57,211,83,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(57, 211, 83, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 211, 83, 0.03) 1px, transparent 1px);
       background-size: 40px 40px;
       pointer-events: none;
       z-index: 0;
@@ -70,41 +81,15 @@
       z-index: 1;
     }
 
-    /* terminal bar */
-    .terminal-bar {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-top: none;
-      padding: 0.5rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      border-radius: 0 0 4px 4px;
-      margin-bottom: 3rem;
-      animation: fadeDown 0.6s ease both;
-    }
-
-    .terminal-bar .dots { display: flex; gap: 6px; margin-right: 0.5rem; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; }
-    .dot-r { background: #ff5f57; }
-    .dot-y { background: #febc2e; }
-    .dot-g { background: #28c840; }
-
-    .terminal-bar .path { color: var(--cyan); }
-    .terminal-bar .branch { color: var(--green); }
     .cursor {
       display: inline-block;
-      width: 8px; height: 13px;
+      width: 8px;
+      height: 13px;
       background: var(--green);
       animation: blink 1.1s step-end infinite;
       vertical-align: middle;
       margin-left: 4px;
     }
-
-    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 
     /* header */
     header {
@@ -124,7 +109,7 @@
     }
 
     .logo-wrap img {
-      height: 80px;
+      height: 120px;
       width: auto;
     }
 
@@ -136,7 +121,9 @@
       color: var(--white);
     }
 
-    .logo-name span { color: var(--green); }
+    .logo-name span {
+      color: var(--green);
+    }
 
     h1 {
       font-family: var(--mono);
@@ -156,8 +143,13 @@
       margin-bottom: 0.4rem;
     }
 
-    h1 .highlight { color: var(--green); }
-    h1 .highlight-o { color: var(--orange); }
+    h1 .highlight {
+      color: var(--orange);
+    }
+
+    h1 .highlight-o {
+      color: var(--orange);
+    }
 
     .subtitle {
       margin-top: 0.9rem;
@@ -166,10 +158,16 @@
       letter-spacing: 0.04em;
     }
 
-    .subtitle .sep { color: var(--border); margin: 0 0.5rem; }
+    .subtitle .sep {
+      color: var(--border);
+      margin: 0 0.5rem;
+    }
 
     /* portrait */
-    .portrait-wrap { position: relative; flex-shrink: 0; }
+    .portrait-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
 
     .portrait-frame {
       width: 148px;
@@ -179,8 +177,11 @@
     .portrait-frame::before {
       content: '';
       position: absolute;
-      top: -6px; left: -6px; right: 6px; bottom: 6px;
-      border: 1px solid var(--green-dim);
+      top: -6px;
+      left: -6px;
+      right: 6px;
+      bottom: 6px;
+      border: 1px solid var(--orange);
       z-index: 0;
     }
 
@@ -211,20 +212,47 @@
       animation: fadeUp 0.7s ease both;
     }
 
-    section:nth-of-type(1) { animation-delay: 0.25s; }
-    section:nth-of-type(2) { animation-delay: 0.35s; }
-    section:nth-of-type(3) { animation-delay: 0.45s; }
-    section:nth-of-type(4) { animation-delay: 0.55s; }
+    section:nth-of-type(1) {
+      animation-delay: 0.25s;
+    }
+
+    section:nth-of-type(2) {
+      animation-delay: 0.35s;
+    }
+
+    section:nth-of-type(3) {
+      animation-delay: 0.45s;
+    }
+
+    section:nth-of-type(4) {
+      animation-delay: 0.55s;
+    }
 
     .section-header {
       margin-bottom: 1.4rem;
     }
 
-    .fn { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.06em; }
-    .fn-kw   { color: #ff7b72; }
-    .fn-name { color: var(--cyan); }
-    .fn-paren { color: var(--muted); }
-    .fn-ret  { color: var(--orange); }
+    .fn {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+    }
+
+    .fn-kw {
+      color: #ff7b72;
+    }
+
+    .fn-name {
+      color: var(--cyan);
+    }
+
+    .fn-paren {
+      color: var(--muted);
+    }
+
+    .fn-ret {
+      color: var(--orange);
+    }
 
     h2 {
       font-family: var(--sans);
@@ -235,7 +263,7 @@
     }
 
     p {
-      font-family: var(--sans);
+      font-family: var(--hack);
       font-size: 0.95rem;
       font-weight: 300;
       color: var(--text);
@@ -243,11 +271,13 @@
       margin-bottom: 0.9rem;
     }
 
-    p:last-child { margin-bottom: 0; }
+    p:last-child {
+      margin-bottom: 0;
+    }
 
     .inline-code {
-      background: rgba(88,166,255,0.1);
-      border: 1px solid rgba(88,166,255,0.2);
+      background: rgba(88, 166, 255, 0.1);
+      border: 1px solid rgba(88, 166, 255, 0.2);
       color: var(--cyan);
       font-family: var(--mono);
       font-size: 0.8em;
@@ -276,30 +306,52 @@
     .card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 2px; height: 100%;
-      background: var(--green-dim);
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 100%;
+      background: var(--oran);
       transition: background 0.2s;
     }
 
-    .card:hover { background: var(--surface2); }
-    .card:hover::before { background: var(--green); }
+    .card:hover {
+      background: var(--surface2);
+    }
 
-    .card-num { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.6rem; }
+    .card:hover::before {
+      background: var(--orange);
+    }
+
+    .card-num {
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.6rem;
+    }
 
     .card h3 {
       font-family: var(--mono);
       font-size: 0.82rem;
       font-weight: 600;
-      color: var(--green);
+      color: var(--orange);
       margin-bottom: 0.5rem;
       letter-spacing: 0.04em;
     }
 
-    .card p { font-size: 0.82rem; color: var(--muted); margin-bottom: 0; font-family: var(--sans); }
+    .card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 0;
+      font-family: var(--sans);
+    }
 
     /* tags */
-    .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1.2rem; }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 1.2rem;
+    }
 
     .tag {
       font-family: var(--mono);
@@ -312,8 +364,15 @@
       transition: all 0.18s;
     }
 
-    .tag:hover { border-color: var(--green); color: var(--green); }
-    .tag.hi { border-color: var(--green-dim); color: var(--green); }
+    .tag:hover {
+      border-color: var(--orange);
+      color: var(--green);
+    }
+
+    .tag.hi {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
 
     /* contact */
     .contact-links {
@@ -335,8 +394,15 @@
       transition: color 0.2s;
     }
 
-    .contact-links a:hover { color: var(--white); }
-    .contact-links a::before { content: '→'; color: var(--green); font-size: 0.7rem; }
+    .contact-links a:hover {
+      color: var(--white);
+    }
+
+    .contact-links a::before {
+      content: '→';
+      color: var(--green);
+      font-size: 0.7rem;
+    }
 
     /* footer */
     footer {
@@ -354,149 +420,171 @@
 
     /* animations */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-10px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* responsive */
     @media (max-width: 580px) {
-      header { grid-template-columns: 1fr; }
-      .portrait-wrap { order: -1; }
-      .portrait-frame img { width: 110px; height: 138px; }
-      .portrait-frame { width: 110px; }
+      header {
+        grid-template-columns: 1fr;
+      }
+
+      .portrait-wrap {
+        order: -1;
+      }
+
+      .portrait-frame img {
+        width: 110px;
+        height: 138px;
+      }
+
+      .portrait-frame {
+        width: 110px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<div class="page">
+  <div class="page">
 
-  <header>
-    <div class="header-text">
-      <div class="logo-wrap">
-        <img src="Logo.png" alt="InnovaTech logo" />
+    <header>
+      <div class="header-text">
+        <div class="logo-wrap">
+          <img src="Logo.png" alt="InnovaTech logo" />
+        </div>
       </div>
-      <h1>
-        <span class="comment">// Cabinet Vision · C# Development</span>
-        Do Cabinets Smarter
-      </h1>
-      <p class="subtitle">
-        CV Expert<span class="sep">|</span>Report Writer<span class="sep">|</span>UCS Development<span class="sep">|</span>Application Integration
+      <div class="portrait-wrap">
+        <div class="portrait-frame">
+          <img src="8S7A3309.jpg" alt="InnovaTech developer" />
+        </div>
+        <div class="portrait-tag">// developer.jpg</div>
+      </div>
+    </header>
+
+    <section>
+      <!--div class="section-header">
+        <span class="fn">
+          <span class="fn-kw">public </span>
+          <span class="fn-ret">string </span>
+          <span class="fn-name">About</span>
+          <span class="fn-paren">() { }</span>
+        </span>
+      </div-->
+      <h2>CABINET VISION Professional</h2>
+      <p>
+        I am passionate about developing better CABINET VISION solutions.
+        I offer custom reports, displaying exactly the information your shop
+        needs, tailored to the way you do things. I will write custom UCSs,
+        (both UCS:M and UCS:JS), as well as machine and report scripts. My specialty
+        is developing custom applications for your shop and office. Job management,
+        offcut tracking, material management, you name it. Let's think outside the box!
       </p>
-    </div>
-    <div class="portrait-wrap">
-      <div class="portrait-frame">
-        <img src="8S7A3309.jpg" alt="InnovaTech developer" />
+    </section>
+
+    <section>
+      <!--div class="section-header">
+        <span class="fn">
+          <span class="fn-kw">public </span>
+          <span class="fn-ret">List&lt;Skill&gt; </span>
+          <span class="fn-name">GetExpertise</span>
+          <span class="fn-paren">() { }</span>
+        </span>
+      </div-->
+      <h2>Core capabilities.</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-num">01</div>
+          <h3>Report Development</h3>
+          <p>Production-ready cut lists, purchase orders, and fully custom reports that go well beyond the defaults.</p>
+        </div>
+        <div class="card">
+          <div class="card-num">02</div>
+          <h3>UCS Development</h3>
+          <p>Custom UCSs, that do what you want them to. Including the new UCS:JS with CAD automation capabilities.</p>
+        </div>
+        <div class="card">
+          <div class="card-num">03</div>
+          <h3>Applications</h3>
+          <p>Custom applications to solve problems. Utilities and integration with other systems.</p>
+        </div>
       </div>
-      <div class="portrait-tag">// developer.jpg</div>
-    </div>
-  </header>
+    </section>
 
-  <section>
-    <div class="section-header">
-      <span class="fn">
-        <span class="fn-kw">public </span>
-        <span class="fn-ret">string </span>
-        <span class="fn-name">About</span>
-        <span class="fn-paren">() { }</span>
-      </span>
-    </div>
-    <h2>CABINET VISION Professional</h2>
-    <p>
-      I am passionate about developing better CABINET VISION solutions.
-      I offer custom reports, displaying exactly the information your shop
-      needs, tailored to the way you do things. I will write custom UCSs,
-      (both UCS:M and UCS:JS), as well as machine and report scripts. My specialty 
-      is developing custom applications for your shop and office. Job management,
-      offcut tracking, material management, you name it. Let's think outside the box!
-    </p>
-  </section>
-
-  <section>
-    <div class="section-header">
-      <span class="fn">
-        <span class="fn-kw">public </span>
-        <span class="fn-ret">List&lt;Skill&gt; </span>
-        <span class="fn-name">GetExpertise</span>
-        <span class="fn-paren">() { }</span>
-      </span>
-    </div>
-    <h2>Core capabilities.</h2>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-num">01</div>
-        <h3>Report Development</h3>
-        <p>Production-ready cut lists, purchase orders, and fully custom reports that go well beyond the defaults.</p>
+    <section>
+      <!--div class="section-header">
+        <span class="fn">
+          <span class="fn-kw">const </span>
+          <span class="fn-ret">string[] </span>
+          <span class="fn-name">techStack</span>
+          <span class="fn-paren"> = [ ... ]</span>
+        </span>
+  </div-->
+      <h2>My Skill Set</h2>
+      <div class="tags">
+        <span class="tag hi">Cabinet Vision</span>
+        <span class="tag hi">Report Center</span>
+        <span class="tag hi">UCS</span>
+        <span class="tag hi">Machine Scripts</span>
+        <span class="tag hi">C# / .NET</span>
+        <span class="tag hi">VBScript</span>
+        <span class="tag hi">SQL</span>
       </div>
-      <div class="card">
-        <div class="card-num">02</div>
-        <h3>UCS Development</h3>
-        <p>Custom UCSs, that do what you want them to. Including the new UCS:JS with CAD automation capabilities.</p>
+    </section>
+
+    <section>
+      <!--div class="section-header">
+        <span class="fn">
+          <span class="fn-kw">await </span>
+          <span class="fn-name">Contact</span>
+          <span class="fn-paren">.Send(</span>
+          <span class="fn-ret">message</span>
+          <span class="fn-paren">)</span>
+        </span>
+  </div-->
+      <h2>Get in touch.</h2>
+      <p>
+        Got a Cabinet Vision problem sitting in the "too hard" pile? Need a custom report, a better
+        UCS, or an application that connects CV to the rest of your workflow?
+        Reach out — I'd love to get in touch!
+      </p>
+      <div class="contact-links">
+        <a href="mailto:patrick@in-nova-tech.com">patrick@in-nova-tech.com</a>
+        <a href="https://github.com/pathurst" target="_blank">GitHub</a>
+        <a href="https://nexus.hexagon.com/community/members/integritykitchens18_4000_gmail.com" target="_blank">Nexus
+          Community</a>
       </div>
-      <div class="card">
-        <div class="card-num">03</div>
-        <h3>Applications</h3>
-        <p>Custom applications to solve problems. Utilities and integration with other systems.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <div class="section-header">
-      <span class="fn">
-        <span class="fn-kw">const </span>
-        <span class="fn-ret">string[] </span>
-        <span class="fn-name">techStack</span>
-        <span class="fn-paren"> = [ ... ]</span>
-      </span>
-    </div>
-    <h2>My Skill Set</h2>
-    <div class="tags">
-      <span class="tag hi">Cabinet Vision</span>
-      <span class="tag hi">Report Center</span>
-      <span class="tag hi">UCS</span>
-      <span class="tag-hi">Machine Scripts</span>
-      <span class="tag hi">C# / .NET</span>
-      <span class="tag hi">VBScript</span>
-      <span class="tag hi">SQL</span>
-    </div>
-  </section>
+  </div>
 
-  <section>
-    <div class="section-header">
-      <span class="fn">
-        <span class="fn-kw">await </span>
-        <span class="fn-name">Contact</span>
-        <span class="fn-paren">.Send(</span>
-        <span class="fn-ret">message</span>
-        <span class="fn-paren">)</span>
-      </span>
-    </div>
-    <h2>Get in touch.</h2>
-    <p>
-      Got a Cabinet Vision problem sitting in the "too hard" pile? Need a custom report, a better
-      UCS, or an application that connects CV to the rest of your workflow?
-      Reach out — I'd love to get in touch!
-    </p>
-    <div class="contact-links">
-      <a href="mailto:you@innovatech.com">patrick@in-nova-tech.com</a>
-      <a href="https://github.com/pathurst" target="_blank">GitHub</a>
-      <a href="https://nexus.hexagon.com/community/members/integritykitchens18_4000_gmail.com" target="_blank">Nexus Community</a>
-    </div>
-  </section>
+  <footer class="page">
+    <span style="color:var(--green-dim)">// InnovaTech &copy; <span id="yr"></span></span>
+    <span>Cabinet Vision &amp; Application Development</span>
+  </footer>
 
-</div>
-
-<footer class="page">
-  <span style="color:var(--green-dim)">// InnovaTech &copy; <span id="yr"></span></span>
-  <span>Cabinet Vision &amp; Application Development</span>
-</footer>
-
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
+
 </html>
