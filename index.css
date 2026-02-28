@@ -191,7 +191,7 @@ h1 .highlight-o {
     color: var(--green);
     letter-spacing: 0.1em;
     margin-top: 0.6rem;
-    text-align: center;
+    text-align: left;
 }
 
 /* sections */
@@ -444,5 +444,10 @@ footer {
 
     .portrait-frame {
         width: 110px;
+    }
+
+    .logo-wrap img {
+        width: 95%;
+        height: auto;
     }
 }
